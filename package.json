@@ -3,8 +3,8 @@
 	"version": "1.0.0",
 	"main": "out/init.lua",
 	"scripts": {
-		"build": "rbxtsc",
-		"watch": "rbxtsc -w",
+		"build": "rbxtsc --verbose",
+		"watch": "rbxtsc -w --verbose",
 		"prepublishOnly": "npm run build"
 	},
 	"keywords": [],

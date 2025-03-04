@@ -70,7 +70,7 @@ export function GetApiDump(options?: IGetApiDumpOptions): ApiDumpTypes.IAPIDump 
 		return GetAndSaveApiDump(version);
 	}
 
-	const [is_version_fetch_success, version] = pcall(HttpService.GetAsync, version_link);
+	const [is_version_fetch_success, version] = pcall(() => HttpService.GetAsync(version_link));
 	const existing_version = plugin.GetSetting(
 		options?.VersionSaveName ?? API_DUMP_VERSION_SAVE_NAME,
 	) as string | undefined;
