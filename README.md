@@ -33,35 +33,16 @@ export function LoadApiDump(plugin?: Plugin, options?: IGetApiDumpOptions): Prom
 export function GetApiDump(): Promise<ApiDumpTypes.IAPIDump>;
 ```
 
-## Recommended usage in plugins
-
-```ts
-import { ApiDumpTypes, GetApiDump } from "@rbxts/api-dump-fetcher";
-
-export namespace ApiDumpController {
-	let api_dump: ApiDumpTypes.IAPIDump;
-	export function Init(plugin: Plugin) {
-		//cashes API dump
-		api_dump = GetApiDump(plugin);
-	}
-	export function AwaitApiDump() {
-		WaitInitialization();
-		return api_dump;
-	}
-	export function WaitInitialization() {
-		while (api_dump === undefined) task.wait();
-	}
-}
-```
-
 ## Example usage:
 
 Extracting all classes with propeties that are of type Color3
 
 ```ts
-import { ApiDumpConstants, GetApiDump } from "@rbxts/api-dump-fetcher";
+import { ApiDumpConstants, GetApiDump, LoadApiDump } from "@rbxts/api-dump-fetcher";
 
-const api_dump = GetApiDump(plugin);
+LoadApiDump(plugin); //has to be executed once from the .client.ts or .server.ts
+
+const api_dump = GetApiDump().expect();
 
 const class_properties_map = new Map<string, string[]>();
 
