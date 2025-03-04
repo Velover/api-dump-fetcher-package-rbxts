@@ -18,17 +18,18 @@ export function GetApiDumpVersion(): string {
 const API_DUMP_SAVE_NAME = "API_DUMP";
 const API_DUMP_VERSION_SAVE_NAME = "API_DUMP_VERSION";
 interface IGetApiDumpOptions {
-	/**@default false */
-	Override?: string;
-	/**@default false */
+	/**doesnt save in the plugin
+	 * @default false */
 	DontSave?: boolean;
-	/**@default API_DUMP*/
+	/**name of the plugin.SetSetting where compressed api dump is going to be saved
+	 * @default API_DUMP*/
 	SaveName?: string;
-	/**@default API_DUMP_VERSION*/
+	/**name of the plugin.SetSetting where version of the api dump is going to be saved
+	 * @default API_DUMP_VERSION*/
 	VersionSaveName?: string;
 }
 
-export function GetApiDump(plugin?: Plugin, options?: IGetApiDumpOptions): ApiDumpTypes.IAPIDump {
+function ExtractApiDump(plugin?: Plugin, options?: IGetApiDumpOptions): ApiDumpTypes.IAPIDump {
 	if (options?.DontSave) {
 		return HttpService.JSONDecode(HttpService.GetAsync(api_dump_link)) as ApiDumpTypes.IAPIDump;
 	}
@@ -68,11 +69,6 @@ export function GetApiDump(plugin?: Plugin, options?: IGetApiDumpOptions): ApiDu
 		} catch {}
 	};
 
-	if (options?.Override) {
-		const version = HttpService.GetAsync(version_link);
-		return GetAndSaveApiDump(version);
-	}
-
 	const [is_version_fetch_success, version] = pcall(() => HttpService.GetAsync(version_link));
 	const existing_version = plugin.GetSetting(
 		options?.VersionSaveName ?? API_DUMP_VERSION_SAVE_NAME,
@@ -93,7 +89,7 @@ export function GetApiDump(plugin?: Plugin, options?: IGetApiDumpOptions): ApiDu
 	if (version !== existing_version) {
 		const [success, api_dump] = pcall(GetAndSaveApiDump, version);
 		if (!success) {
-			warn("Wasn't been able to fetch new API Dump");
+			warn("Wasn't able to fetch new API Dump");
 			const existing_api_dump = ExtractSavedApiDump();
 			assert(existing_api_dump !== undefined, "Failed so load saved API Dump");
 			return existing_api_dump;
@@ -109,4 +105,26 @@ export function GetApiDump(plugin?: Plugin, options?: IGetApiDumpOptions): ApiDu
 	}
 
 	return saved_api_dump;
+}
+
+let resolve: (value: ApiDumpTypes.IAPIDump) => void;
+const promise = new Promise<ApiDumpTypes.IAPIDump>((r) => {
+	resolve = r;
+});
+
+let is_loading = false;
+export async function LoadApiDump(plugin?: Plugin, options?: IGetApiDumpOptions): Promise<void> {
+	if (is_loading) return;
+	is_loading = true;
+	try {
+		resolve(ExtractApiDump(plugin, options));
+	} catch (ex) {
+		throw ex;
+	} finally {
+		is_loading = false;
+	}
+}
+
+export function GetApiDump(): Promise<ApiDumpTypes.IAPIDump> {
+	return promise;
 }
