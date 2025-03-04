@@ -34,7 +34,10 @@ function ExtractApiDump(plugin?: Plugin, options?: IGetApiDumpOptions): ApiDumpT
 		return HttpService.JSONDecode(HttpService.GetAsync(api_dump_link)) as ApiDumpTypes.IAPIDump;
 	}
 
-	assert(plugin !== undefined, "Plugin should exist to save");
+	assert(
+		plugin !== undefined,
+		"Plugin should exist to save, please ensure that you're setting the plugin NOT from ModuleScript, but from LocalScript or Script",
+	);
 
 	const GetAndSaveApiDump = (version: string): ApiDumpTypes.IAPIDump => {
 		const api_dump_text = HttpService.GetAsync(api_dump_link);
