@@ -6,9 +6,10 @@ import { base64 } from "@rbxts/base64";
 export * from "./ApiDumpTypes";
 export * from "./ApiDumpConstants";
 
-const version_link = "https://github.com/MaximumADHD/Roblox-Client-Tracker/blob/roblox/version.txt";
+const version_link =
+	"https://raw.githubusercontent.com/MaximumADHD/Roblox-Client-Tracker/refs/heads/roblox/version.txt";
 const api_dump_link =
-	"https://github.com/MaximumADHD/Roblox-Client-Tracker/blob/roblox/Mini-API-Dump.json";
+	"https://raw.githubusercontent.com/MaximumADHD/Roblox-Client-Tracker/refs/heads/roblox/Mini-API-Dump.json";
 
 export function GetApiDumpVersion(): string {
 	return HttpService.GetAsync(version_link);
@@ -27,10 +28,12 @@ interface IGetApiDumpOptions {
 	VersionSaveName?: string;
 }
 
-export function GetApiDump(options?: IGetApiDumpOptions): ApiDumpTypes.IAPIDump {
+export function GetApiDump(plugin?: Plugin, options?: IGetApiDumpOptions): ApiDumpTypes.IAPIDump {
 	if (options?.DontSave) {
 		return HttpService.JSONDecode(HttpService.GetAsync(api_dump_link)) as ApiDumpTypes.IAPIDump;
 	}
+
+	assert(plugin !== undefined, "Plugin should exist to save");
 
 	const GetAndSaveApiDump = (version: string): ApiDumpTypes.IAPIDump => {
 		const api_dump_text = HttpService.GetAsync(api_dump_link);
