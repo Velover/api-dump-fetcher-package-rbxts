@@ -1,40 +1,48 @@
 {
-  "name": "@rbxts/serializer-package-rbxts",
-  "version": "1.0.0",
-  "main": "out/init.lua",
-  "scripts": {
-    "build": "rbxtsc",
-    "watch": "rbxtsc -w",
-    "prepublishOnly": "npm run build"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "types": "out/index.d.ts",
-  "files": [
-    "out",
-    "!**/*.tsbuildinfo"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "devDependencies": {
-    "@rbxts/compiler-types": "^3.0.0-types.0",
-    "@rbxts/types": "^1.0.839",
-    "@typescript-eslint/eslint-plugin": "^8.26.0",
-    "@typescript-eslint/parser": "^8.26.0",
-    "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.0.2",
-    "eslint-plugin-prettier": "^5.2.3",
-    "eslint-plugin-roblox-ts": "^0.0.36",
-    "prettier": "^3.5.3",
-    "roblox-ts": "^3.0.0",
-    "typescript": "^5.8.2"
-  },
-  "dependencies": {
-    "@rbxts/base64": "^1.0.0",
-    "@rbxts/services": "^1.5.5",
-    "@rbxts/zlib": "^1.0.1"
-  }
+	"name": "@rbxts/api-dump-fetcher",
+	"version": "1.0.0",
+	"main": "out/init.lua",
+	"scripts": {
+		"build": "rbxtsc",
+		"watch": "rbxtsc -w",
+		"prepublishOnly": "npm run build"
+	},
+	"keywords": [],
+	"author": "Catargo",
+	"license": "MIT",
+	"types": "out/index.d.ts",
+	"files": [
+		"out",
+		"!**/*.tsbuildinfo"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"devDependencies": {
+		"@rbxts/compiler-types": "^3.0.0-types.0",
+		"@rbxts/types": "^1.0.839",
+		"@typescript-eslint/eslint-plugin": "^8.26.0",
+		"@typescript-eslint/parser": "^8.26.0",
+		"eslint": "^9.21.0",
+		"eslint-config-prettier": "^10.0.2",
+		"eslint-plugin-prettier": "^5.2.3",
+		"eslint-plugin-roblox-ts": "^0.0.36",
+		"prettier": "^3.5.3",
+		"roblox-ts": "^3.0.0",
+		"typescript": "^5.8.2"
+	},
+	"dependencies": {
+		"@rbxts/base64": "^1.0.0",
+		"@rbxts/services": "^1.5.5",
+		"@rbxts/zlib": "^1.0.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Velover/api-dump-fetcher-package-rbxts.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Velover/api-dump-fetcher-package-rbxts/issues"
+	},
+	"homepage": "https://github.com/Velover/api-dump-fetcher-package-rbxts#readme",
+	"description": ""
 }
