@@ -1,6 +1,17 @@
-#Api-dump-fetcher
+# Api-dump-fetcher
 
 Fully types MaximumADHD Api-Dump (mostly for plugins)
+
+# [NPM](https://www.npmjs.com/package/@rbxts/api-dump-fetcher)
+
+### Start
+```bash
+#bun
+bun add @rbxts/api-dump-fetcher
+
+#npm
+npm i @rbxts/api-dump-fetcher
+```
 
 Saves api-dump in the plugin and auto updates it. 
 
